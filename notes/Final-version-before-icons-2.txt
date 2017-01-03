@@ -1,0 +1,291 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Super Basic Video Player</title>
+
+<link rel="stylesheet" type="text/css" href="css/SB-normalize.css">
+<link rel="stylesheet" type="text/css" href="jquery-ui/SB-jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/SB-Basic.css">
+
+<script src="js/SB-jquery-3.0.js"></script>
+<script src="jquery-ui/SB-jquery-ui.js"></script>
+<script src="js/SB-video-player.js"></script>
+
+</head>
+
+<body>
+	<div class="super-basic-container clearfix">
+    	<h3 class="float-center">
+    		<span>Super Basic Video Player --- By Artemis Ya&ntilde;ez --- Creator of such awesome and amazing things.</span>
+    	</h3>
+    
+    <div class="super-basic-player float-center">
+    	<div class="super-basic-video">
+    		<video id="SB-video" controls class="super-basic-v-tag float-center">
+    			<source src="clips/Anime AMV - Wild Ones - YouTube.mp4" type="video/mp4"/>
+    			<source src="clips/Anime AMV - Wild Ones - YouTube.ogv" type="video/ogg"/>
+    			<source src="clips/Anime AMV - Wild Ones - YouTube.webm" type="video/webm"/>
+    		</video>
+    	</div>
+        
+        <!--<div class="super-basic-big-play clearfix">
+        	<a href="#" class="big-play-btn">Big play</a>
+        	<div class="super-basic-loading">
+            	<span class="buffering">loading</span>
+            </div>
+        	<div class="super-basic-replay">
+            	a[href="#"].replay-btn
+            </div>
+        </div>-->
+        
+        <nav class="super-basic-controls clearfix">
+        	<ul class="super-basic-list float-left">
+        		<li class="super-basic-play float-left">
+                	<!--<a href="#" class="play-pause">Play</a>-->
+                    <button class="play-pause">Play</button>
+                </li>
+            		<li class="super-basic-current float-left">
+                		<div class="current-time float-left">00:00</div>
+                	</li>
+                	<li class="super-basic-progress float-left">
+                		<div class="progress-bar float-left">progress bar
+                        	<div class="progress-slider">
+                            	<div class="load-progress">Loading</div>
+                            	Slider
+                            </div>
+                        </div>
+                	</li>
+                    <li class="super-basic-duration float-left">
+                    	<div class="duration float-left">00:00</div>
+                    </li>
+                	<li class="super-basic-volume float-left">
+                		<!--<a href="#" class="mute-unmute float-left">mute</a>-->
+                        <button class="mute-unmute float-left">Mute</button>
+                		<div class="volume-bar float-left">volume bar</div>
+                	</li>
+        			<li class="super-basic-full float-left">
+                		<a href="#" class="fullScreen float-left">FS</a>
+                	</li>
+        	</ul>
+           
+        </nav>
+        <p>please upgrade your browser to see this video!</p>
+        <!-- instead of the p tag create fallbacks for things. -->
+    </div>
+    </div>
+	
+</body>
+</html>
+<!--<a href="#" class="play-pause">Play</a>-->
+<!--<a href="#" class="mute-unmute float-left">mute</a>-->
+
+// JavaScript Document
+$(function(){
+	"use strict";
+	//create the variables
+	
+	
+	var videoContainers = {
+		$videoContainer : $('.super-basic-player'),
+		$videoControls : $('.super-basic-controls'),	
+	};
+	
+	var video = {
+		$video : $('#SB-video'),
+		$videoObj: $('#SB-video')[0],
+		$current : $('.current-time'),
+		$playPause : $('.play-pause'),
+		$duration : $('.duration'),
+		$bufferBar : $('.load-progress'),
+		$timeBar : $('.progress-slider'),
+		$timeBarHandle : $('.progress-slider > .ui-slider-handle'),
+		$timeSlide : false,
+		$volumeSlide : 1,
+		$audioSlider : $('.volume-bar'),
+		$muteUnmute : $('.mute-unmute'),
+		$auHandle : $('.mute-unmute > .ui-slider-handle'),
+	};
+	
+	var full = {
+			
+	};
+	
+	//remove the controls
+	
+	video.$video.removeAttr('controls');
+	
+	video.$video.on('loadedmetadata', function(){
+		setTimeout(updateLoadProgress, 500);
+		hoverControls();
+	});
+	
+	video.$video.on("timeupdate", function(){
+		currentTime();
+	});
+	
+	video.$video.on("durationchange", function(){
+		DurationTime();
+	});
+	
+	video.$video.on("canplaythrough", function(){
+		updateLoadProgress();
+	});
+	
+	
+	seekBar();
+	
+	
+	function updateLoadProgress(){
+		var currentBuffer = video.$videoObj.buffered.end(0);
+		var maxduration = video.$videoObj.duration;
+		var perc = 100 * currentBuffer / maxduration;
+		video.$bufferBar.css('width',perc+'%');
+			
+		if(currentBuffer < maxduration) {
+			setTimeout(updateLoadProgress, 500);
+		}
+	}
+	
+	function hoverControls(){
+		videoContainers.$videoControls.show().css({'bottom': 0});
+		videoContainers.$videoContainer
+		.hover(function(){
+			videoContainers.$videoControls.stop().animate({'bottom': 60}, 500);
+		}, function(){
+			videoContainers.$videoControls.stop().animate({'bottom': -60}, 1000);	
+			
+		});
+	}
+	
+	function playpause(){
+		if (video.$videoObj.paused || video.$videoObj.ended) {
+			video.$videoObj.play();
+			video.$playPause.text("Pause");
+		} else {
+			video.$videoObj.pause();
+			video.$playPause.text("Play");	
+		}
+	}
+	
+	function videoPlayPause(){
+		if (video.$videoObj.paused || video.$videoObj.ended) {
+			video.$videoObj.play();
+		} else {
+			video.$videoObj.pause();
+		}	
+	}
+	
+	video.$playPause.click(playpause);
+	video.$video.click(videoPlayPause);
+	
+	function currentTime(){
+		video.$current.html(formatTime(video.$videoObj.currentTime));
+	}
+	
+	function DurationTime(){
+		video.$duration.html(formatTime(video.$videoObj.duration));
+	}
+	
+	function formatTime(seconds) {
+    		seconds = Math.round(seconds);
+    		var minutes = Math.floor(seconds / 60);
+    		// Remaining seconds
+    		seconds = Math.floor(seconds % 60);
+   	 		// Add leading Zeros
+    		minutes = (minutes >= 10) ? minutes : "0" + minutes;
+    		seconds = (seconds >= 10) ? seconds : "0" + seconds;
+    		return minutes + ":" + seconds;
+  	}
+	
+	//progress bar
+	function seekBar(){
+		
+	video.$video.on({
+        canplaythrough: function() {
+            var vid = this;
+			var $vidTimeBar = video.$timeBar;
+           $vidTimeBar.slider({
+                range: "min",
+                min: 0,
+                max: parseInt(vid.duration, 10),
+                value: 0,
+                slide: function (event, ui) {
+                    vid.currentTime = ui.value;
+                }
+            });
+        },
+        timeupdate: function() {
+			var $vidTimeBar = video.$timeBar;
+            $vidTimeBar.slider('value', this.currentTime);
+        },
+		ended : function(){
+			var vid = this;
+			vid.currentTime = 0;	
+		}
+    });
+}
+
+//volume control
+
+function volumeBar(){
+	video.$audioSlider.slider({
+		value : 1,
+		orientation : "horizontal",
+		range : 'max',
+		max : 1,
+		step : 0.02,
+		animate : true,
+		slide: function(e,ui){
+			video.$videoObj.muted = false;
+			video.$volumeSlide = ui.value;
+			video.$videoObj.volume = ui.value;
+			volumeIcons();
+		}	
+	});
+} volumeBar();	
+	
+	function volumeIcons(){
+		var value = video.$audioSlider.slider('value');
+		var volume = video.$muteUnmute;
+		
+		if(value <= 5) { 
+            /* volume.css('background-position', '0 0');*/
+			volume.text("Unmute");
+          } 
+        else if (value <= 25) {
+              /*volume.css('background-position', '0 -25px');*/
+			 volume.text("Mute"); 
+         } 
+         else if (value <= 75) {
+             /* volume.css('background-position', '0 -50px');*/
+			volume.text("Mute"); 
+         } 
+          else {
+              /*volume.css('background-position', '0 -75px');*/
+			  volume.text("Mute"); 
+          }
+	}
+	
+	//mute and unmute buttons
+	
+	function muteVideo() {
+		var SBVolume = video.$volumeSlide;
+	  if (video.$videoObj.volume > 0) {
+		  video.$videoObj.volume = 0;
+		 video.$muteUnmute.text("Unmute");
+		 video.$audioSlider.slider('value' , '0');
+	  } else {
+		  video.$videoObj.volume = 1;	
+		 video.$muteUnmute.text("Mute");
+		 video.$audioSlider.slider('value' , SBVolume);
+	  }
+	  return false;	
+	}
+	
+	video.$muteUnmute.click(muteVideo);
+	
+	
+		
+});
+

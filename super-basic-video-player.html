@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Super Basic Video Player</title>
+
+<link rel="stylesheet" type="text/css" href="css/SB-normalize.css">
+<link rel="stylesheet" type="text/css" href="jquery-ui/SB-jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/SB-Basic.css">
+
+<script src="js/SB-jquery-3.0.js"></script>
+<script src="jquery-ui/SB-jquery-ui.js"></script>
+<script src="js/SB-video-player.js"></script>
+
+</head>
+
+<body>
+	<div class="super-basic-container clearfix">
+    	<h3 class="float-center">
+    		<span>Super Basic Video Player --- By Artemis Ya&ntilde;ez --- Creator of such awesome and amazing things.</span>
+    	</h3>
+    
+    <div class="super-basic-player float-center">
+    	<div class="super-basic-video">
+    		<video id="SB-video" controls class="super-basic-v-tag float-center">
+    			<source src="clips/Anime AMV - Wild Ones - YouTube.mp4" type="video/mp4"/>
+    			<source src="clips/Anime AMV - Wild Ones - YouTube.ogv" type="video/ogg"/>
+    			<source src="clips/Anime AMV - Wild Ones - YouTube.webm" type="video/webm"/>
+    		</video>
+    	</div>
+        
+        <!--<div class="super-basic-big-play clearfix">
+        	<a href="#" class="big-play-btn">Big play</a>
+        	<div class="super-basic-loading">
+            	<span class="buffering">loading</span>
+            </div>
+        	<div class="super-basic-replay">
+            	a[href="#"].replay-btn
+            </div>
+        </div>-->
+        
+        <nav class="super-basic-controls clearfix">
+        	<ul class="super-basic-list float-left">
+        		<li class="super-basic-play float-left">
+                	<!--<a href="#" class="play-pause">Play</a>-->
+                    <button class="play-pause">Play</button>
+                </li>
+            		<li class="super-basic-current float-left">
+                		<div class="current-time float-left">00:00</div>
+                	</li>
+                	<li class="super-basic-progress float-left">
+                		<div class="progress-bar float-left">progress bar
+                        	<div class="progress-slider">
+                            	<div class="load-progress">Loading</div>
+                            	Slider
+                            </div>
+                        </div>
+                	</li>
+                    <li class="super-basic-duration float-left">
+                    	<div class="duration float-left">00:00</div>
+                    </li>
+                	<li class="super-basic-volume float-left">
+                		<!--<a href="#" class="mute-unmute float-left">mute</a>-->
+                        <button class="mute-unmute float-left">Mute</button>
+                		<div class="volume-bar float-left">volume bar</div>
+                	</li>
+        			<li class="super-basic-full float-left">
+                		<a href="#" class="fullScreen float-left">FS</a>
+                	</li>
+        	</ul>
+           
+        </nav>
+        <p>please upgrade your browser to see this video!</p>
+        <!-- instead of the p tag create fallbacks for things. -->
+    </div>
+    </div>
+	
+</body>
+</html>

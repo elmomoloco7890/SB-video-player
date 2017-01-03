@@ -1,0 +1,326 @@
+http://thenewcode.com/777/Create-Fullscreen-HTML5-Page-Background-Video
+
+https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+
+https://www.sitepoint.com/use-html5-full-screen-api/
+
+https://msdn.microsoft.com/en-us/library/dn265028(v=vs.85).aspx
+
+when it comes to fullscreen either use a plugin to create it or write myself in my own plugin
+
+view-source:http://blogs.sitepointstatic.com/examples/tech/full-screen/index2.html use this index for stuff
+
+// full-screen available?
+if (
+	document.fullscreenEnabled || 
+	document.webkitFullscreenEnabled || 
+	document.mozFullScreenEnabled ||
+	document.msFullscreenEnabled
+) {
+
+	// image container
+	var i = document.getElementById("myimage");
+	
+	// click event handler
+	i.onclick = function() {
+	
+		// in full-screen?
+		if (
+			document.fullscreenElement ||
+			document.webkitFullscreenElement ||
+			document.mozFullScreenElement ||
+			document.msFullscreenElement
+		) {
+
+			// exit full-screen
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.msExitFullscreen) {
+				document.msExitFullscreen();
+			}
+		
+		}
+		else {
+		
+			// go full-screen
+			if (i.requestFullscreen) {
+				this.requestFullscreen();
+			} else if (i.webkitRequestFullscreen) {
+				i.webkitRequestFullscreen();
+			} else if (i.mozRequestFullScreen) {
+				i.mozRequestFullScreen();
+			} else if (i.msRequestFullscreen) {
+				i.msRequestFullscreen();
+			}
+		
+		}
+	
+	}
+
+}
+
+
+ var isFullscreen= false;
+        fullscreenbutton.addEventListener('click', function() {
+            if(!isFullscreen){
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } 
+                else if (video.mozRequestFullScreen) {
+                    container.mozRequestFullScreen(); // Firefox
+                } 
+                else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen(); // Chrome and Safari
+                }
+                isFullscreen=true;
+                fullscreenbutton.classList.remove('icon-fullscreen-alt');
+                fullscreenbutton.classList.add('icon-fullscreen-exit-alt');
+            }
+            else{
+
+                if(document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } 
+                else if(document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } 
+                else if(document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                }
+                isFullscreen=false;
+                fullscreenbutton.classList.add('icon-fullscreen-alt');
+                fullscreenbutton.classList.remove('icon-fullscreen-exit-alt');
+            }
+            
+        }, false);
+		
+		//old css file before the volume slider
+		
+		@charset "utf-8";
+/* CSS Document */
+.super-basic-container{
+	background-color: #221144;
+	height: 800px;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.super-basic-container h3{
+	background-color: #111122;
+	height: 20px;
+	overflow: hidden;
+	width: 700px;
+	color: #E4B7B8;	
+	text-align: center;	
+}
+
+.super-basic-container h3 span{
+	background-color: #000000;
+	width: 100%;
+	float: left;
+}
+
+.super-basic-container .super-basic-player{
+	background-color: #E7B5F7;	
+	overflow: hidden;
+	height: 400px;
+	width: 700px;
+	padding: 0;
+}
+
+.super-basic-container .super-basic-player .super-basic-video{
+	background-color: #000222;
+	height: 100%;
+	width: 100%;	
+}
+
+.super-basic-container .super-basic-player .super-basic-video .super-basic-v-tag{
+	width: 95%;
+	position: relative;
+	height: auto;
+	top: 10px;	
+}
+
+.super-basic-container .super-basic-player .super-basic-controls{
+	background-color: rgba(20,20,19,1);
+	position: relative;
+	bottom: 60px;
+	display: inline-block;
+	width: 93%;
+	height: 32px;
+	border-radius: 5px;
+	left: 20px;
+	padding: 0.2rem;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list{
+	list-style: none;
+	background-color: #EEEFFF;
+	width: 98%;
+	height: 95%;
+	position: relative;
+	bottom: 0px;
+	margin: 0;
+	padding: 0;
+	left: 5px;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-play{
+	background-color: rgba(0,0,0,0);
+	color: #E3BEFC;
+	width: 40px;
+	height: 90%;
+	margin: 0;
+	padding: 0.1rem;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-play .play-pause{
+	text-decoration: none;
+	background-color: rgba(0,0,0,0);
+	color: #ffffff;
+	float: left;
+	padding: 0;
+	width: 100%;
+	margin: 0;
+	height: 100%;
+	border: none;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-play .play-pause:focus{
+	outline: 0;	
+}
+/*.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-current, .super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-current .super-basic-duration{
+	background-color: #5D5566;
+	width: 45px;
+	height: 100%;	
+}*/
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-current,.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-duration{
+	background-color: #5D5566;
+	width: 45px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-current .current-time{
+	background-color: #225588;
+	width: 100%;
+	height: 100%;	
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-duration .duration{
+	background-color: #225588;
+	width: 100%;
+	height: 100%;	
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .super-basic-progress{
+	background-color: #221144;
+	width: 340px;
+	height: 100%;
+	text-indent: -999px !important;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .progress-bar{  
+	background-color: #E21144;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .progress-bar .progress-slider{
+	background-color: #FF4455;
+	float: left;
+	height: 5px;
+	width: 90%;
+	position: relative;
+	top: 1rem;
+	left: 0.9rem;
+	border-radius: 5px;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .progress-bar .progress-slider .load-progress{
+	background-color: #000000;
+	text-indent: -999px !important;
+	float: left;
+	height: 100%;
+	width: 0;
+	position: relative;
+	z-index: 1;	
+	border-radius: 5px;
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .progress-bar .progress-slider > .ui-slider-handle{
+	background-color: #226688;
+	margin-left: -0.5em;
+	margin-right: 0;
+	height: 100%;
+	width: 20px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 5px;
+	cursor: pointer;	
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .progress-bar .progress-slider >.ui-slider-range-min{
+	background-color: #e8792c;
+	border-radius: 5px;	
+}
+
+.super-basic-container .super-basic-player .super-basic-controls .super-basic-list .progress-bar .progress-slider > .ui-slider-handle.ui-state-focus{
+	outline: 0;
+	border-radius: 5px;
+}
+
+
+
+.clearfix::before, .clearfix::after {
+  content: ' ';
+  display: table;
+  clear:both; 
+}
+
+.float-left{
+	float: left;	
+}
+.float-right{
+	float: right;	
+}
+
+.float-center{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;	
+}
+
+.float-inline-center{
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto; 	
+}
+
+.ui-slider-horizontal{
+	background-color: rgba(0,0,0,0);
+	border: 0;
+}
+/*function sliderVolume() {
+		var auHandle = video.$auHandle;
+		var auHandlePos = auHandle.left;
+			video.$video.volume = auHandlePos/100;
+						
+			if (auHandlePos < 7 ) {
+					video.$video.volume = 0;	
+				}
+			if (auHandlePos > 93 ) {
+					video.$video.volume = 1;	
+				}
+					
+			}*/
